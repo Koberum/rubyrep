@@ -1,3 +1,5 @@
+conf/*
+jruby/*
 statsvn/*
 coverage/*
 profile/*
