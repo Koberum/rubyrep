@@ -109,7 +109,11 @@ module RR
       # @param [ActiveRecord::ConnectionAdapters::PostgreSQLColumn] column the target column
       # @return [String] the quoted string
       def column_aware_quote(value, column)
-        quote column.type_cast_for_database value
+        if column.sql_type == 'json' or column.sql_type == 'jsonb'
+          "'" + (JSON value).gsub("'"){"''"} + "'"
+        else
+          quote column.type_cast_for_database value
+        end
       end
 
       # Casts a value returned from the database back into the according ruby type.
